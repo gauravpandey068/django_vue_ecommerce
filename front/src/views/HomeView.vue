@@ -12,19 +12,21 @@
     </section>
 
 
-    <div class="column is-multiline">
+    <div class="columns is-multiline">
       <div class="column is-12">
         <h2 class="is-size-2 has-text-centered">Latest Products</h2>
       </div>
       <div class="column is-3 is-flex" v-for="product in latestProducts" v-bind:key="product.id">
         <div class="box">
           <figure class="image mb-4">
-            <img :src="product.get_thumbnail" alt="{{ product.name }}">
+            <img :src="product.get_thumbnail">
           </figure>
           <h3 class="is-size-4">{{ product.name }} </h3>
           <p class="is-size-6 has-text-grey">Rs.{{ product.price }}</p>
 
-          View details
+            <router-link v-bind:to="product.get_absolute_url" class="button is-dark">
+              View details
+            </router-link>
         </div>
       </div>
     </div>
@@ -48,7 +50,7 @@ export default {
   },
   methods: {
     getLatestProducts() {
-      axios.get('/api/v1/latest-products/').then(response => {
+      axios.get('/latest-products/').then(response => {
         this.latestProducts = response.data
       }).catch(error => {
         console.log(error)
@@ -59,7 +61,7 @@ export default {
 </script>
 
 <style>
-.image{
+.image {
   margin-top: -1.25rem;
   margin-left: -1.25rem;
   margin-right: -1.25rem;
